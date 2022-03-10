@@ -1,7 +1,7 @@
 {
   "name": "react-creditcard-input",
   "version": "1.0.0",
-  "description": "Auto validation & formatting for credit card input fields using hooks",
+  "description": "A ReactJS package that provides hooks for auto validation & formatting of credit card input fields",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
