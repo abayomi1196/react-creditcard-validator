@@ -11,12 +11,10 @@
     "url": "git+https://github.com/abayomi1196/react-creditcard-input.git"
   },
   "keywords": [
-    "Credit",
-    "Card",
-    "Payment",
-    "Input",
-    "Input",
-    "Formatting"
+    "credit-card",
+    "card-payment",
+    "input-formatting",
+    "react-js"
   ],
   "author": "Abayomi Ayodele",
   "license": "ISC",
