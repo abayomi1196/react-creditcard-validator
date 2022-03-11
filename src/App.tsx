@@ -1,9 +1,9 @@
-import './App.css';
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>react-creditcard-input</h1>
+      <input type="text" data-testid="card-input" />
     </div>
   );
 }
