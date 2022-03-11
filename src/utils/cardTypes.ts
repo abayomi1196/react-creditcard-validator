@@ -21,7 +21,7 @@ export const CARD_TYPES = [
     displayName: "Verve",
     type: "verve",
     format: DEFAULT_CARD_FORMAT,
-    startPattern: /^(506)/,
+    startPattern: /^5061/,
     gaps: [4, 8, 12],
     lengths: [19],
   },
