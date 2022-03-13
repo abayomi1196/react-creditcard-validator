@@ -20,7 +20,7 @@ describe("Visa card", () => {
 });
 
 describe("Verve card", () => {
-  it("should have 19 digits", () => {
+  it("should have 18 digits", () => {
     render(<App />);
     const input: HTMLInputElement = screen.getByPlaceholderText(PLACEHOLDER);
     input.value = "506133203293299093";
