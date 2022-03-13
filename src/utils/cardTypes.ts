@@ -29,3 +29,6 @@ export const CARD_TYPES = [
 
 export const getCardByType = (type: string) =>
   CARD_TYPES.filter((cardType) => cardType.type === type);
+
+export const getCardTypeByValue = (value: string) =>
+  CARD_TYPES.filter((cardType) => cardType.startPattern.test(value))[0];
