@@ -1,3 +1,11 @@
-export { default as MasterCard } from "./mastercard";
-export { default as PlaceholderCard } from "./placeholder";
-export { default as Visa } from "./visa";
+import mastercard from "./mastercard";
+import placeholder from "./placeholder";
+import visa from "./visa";
+
+const images = {
+  mastercard,
+  placeholder,
+  visa,
+};
+
+export default images;

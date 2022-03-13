@@ -1,8 +1,15 @@
 import "./App.css";
 import usePayment from "./usePaymentInput";
 
+import images from "./images";
+
 function App() {
-  const { getCardNumberProps, getExpiryDateProps, getCVCProps } = usePayment();
+  const {
+    getCardNumberProps,
+    getExpiryDateProps,
+    getCVCProps,
+    getCardImageProps,
+  } = usePayment();
 
   return (
     <div className='App'>
@@ -13,6 +20,8 @@ function App() {
       <input type='text' {...getExpiryDateProps()} />
 
       <input type='text' {...getCVCProps()} />
+
+      <svg {...getCardImageProps({ images })} />
     </div>
   );
 }
