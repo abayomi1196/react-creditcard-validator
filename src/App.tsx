@@ -2,20 +2,17 @@ import "./App.css";
 import usePayment from "./usePaymentInput";
 
 function App() {
-  function handleChange() {}
-
-  const {
-    getCardNumberProps,
-    meta: { cardType },
-  } = usePayment({ onChange: handleChange });
-
-  console.log(cardType);
+  const { getCardNumberProps, getExpiryDateProps, getCVCProps } = usePayment();
 
   return (
     <div className='App'>
       <h1>react-creditcard-input</h1>
 
       <input type='text' {...getCardNumberProps()} />
+
+      <input type='text' {...getExpiryDateProps()} />
+
+      <input type='text' {...getCVCProps()} />
     </div>
   );
 }

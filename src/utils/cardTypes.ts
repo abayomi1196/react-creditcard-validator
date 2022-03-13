@@ -27,6 +27,8 @@ export const CARD_TYPES = [
   },
 ];
 
+export type SINGLE_CARD_TYPE = typeof CARD_TYPES[0];
+
 export const getCardByType = (type: string) =>
   CARD_TYPES.filter((cardType) => cardType.type === type);
 
