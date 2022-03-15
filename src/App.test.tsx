@@ -38,3 +38,39 @@ describe("Mastercard", () => {
     expect(input.value).toHaveLength(16);
   });
 });
+
+describe("Date Tests", () => {
+  it("should show error element if invalid date is provided", () => {
+    render(<App />);
+    const input: HTMLInputElement = screen.getByTestId("expiryDateEl");
+    input.value = "02/22";
+    fireEvent.blur(input);
+
+    const errorEl = screen.getByTestId("expiryErrorEl");
+    expect(errorEl).toBeInTheDocument();
+  });
+});
+
+describe("CardNumber Tests", () => {
+  it("should show error element if invalid cardNumber is provided", () => {
+    render(<App />);
+    const input: HTMLInputElement = screen.getByTestId("cardNumberEl");
+    input.value = "5423332032932990";
+    fireEvent.blur(input);
+
+    const errorEl = screen.getByTestId("cardNumberErrorEl");
+    expect(errorEl).toBeInTheDocument();
+  });
+});
+
+describe("CVC Tests", () => {
+  it("should show error element if invalid CVC is provided", () => {
+    render(<App />);
+    const input: HTMLInputElement = screen.getByTestId("cvcEl");
+    input.value = "1";
+    fireEvent.blur(input);
+
+    const errorEl = screen.getByTestId("cvcErrorEl");
+    expect(errorEl).toBeInTheDocument();
+  });
+});
