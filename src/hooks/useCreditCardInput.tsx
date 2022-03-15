@@ -1,14 +1,14 @@
 import { useRef, useCallback, useState } from "react";
-import { getCardTypeByValue, SINGLE_CARD_TYPE } from "./utils/cardTypes";
-import { formatCardNumber, formatExpiry } from "./utils/formatter";
+import { getCardTypeByValue, SINGLE_CARD_TYPE } from "../utils/cardTypes";
+import { formatCardNumber, formatExpiry } from "../utils/formatter";
 import {
   hasCardNumberReachedMaxLength,
   getCVCError,
   getCardNumberError,
   getExpiryDateError,
-} from "./utils/validators";
+} from "../utils/validators";
 
-function usePaymentInput() {
+function useCreditCardInput() {
   /*===State, Refs & Utility Fns===*/
   const cardNumberField = useRef<HTMLInputElement>();
   const expiryDateField = useRef<HTMLInputElement>();
@@ -345,4 +345,4 @@ function usePaymentInput() {
   };
 }
 
-export default usePaymentInput;
+export default useCreditCardInput;

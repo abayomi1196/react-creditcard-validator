@@ -1,5 +1,5 @@
 import "./App.css";
-import usePayment from "./usePaymentInput";
+import useCreditCardInput from "./hooks/useCreditCardInput";
 
 import images from "./images";
 
@@ -10,7 +10,7 @@ function App() {
     getCVCProps,
     getCardImageProps,
     meta: { erroredInputs },
-  } = usePayment();
+  } = useCreditCardInput();
 
   return (
     <div className='App'>
