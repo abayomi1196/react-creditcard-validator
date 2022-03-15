@@ -69,7 +69,9 @@ export const getExpiryDateError = (
   if (!expiryDate) {
     return errorMessages.emptyExpiryDate || EMPTY_EXPIRY_DATE;
   }
+
   const rawExpiryDate = expiryDate.replace(" / ", "").replace("/", "");
+
   if (rawExpiryDate.length === 4) {
     const month = rawExpiryDate.slice(0, 2);
     const year = `20${rawExpiryDate.slice(2, 4)}`;
@@ -85,6 +87,8 @@ export const getExpiryDateError = (
     ) {
       return errorMessages.dateOutOfRange || DATE_OUT_OF_RANGE;
     }
+
+    return;
   }
   return errorMessages.invalidExpiryDate || INVALID_EXPIRY_DATE;
 };

@@ -1,7 +1,12 @@
 import { useRef, useCallback, useState } from "react";
 import { getCardTypeByValue, SINGLE_CARD_TYPE } from "./utils/cardTypes";
 import { formatCardNumber, formatExpiry } from "./utils/formatter";
-import { hasCardNumberReachedMaxLength, getCVCError } from "./utils/validators";
+import {
+  hasCardNumberReachedMaxLength,
+  getCVCError,
+  getCardNumberError,
+  getExpiryDateError,
+} from "./utils/validators";
 
 function usePaymentInput() {
   /*===State, Refs & Utility Fns===*/
@@ -85,9 +90,18 @@ function usePaymentInput() {
         }
 
         props.onChange && props.onChange(e);
+
+        const cardNumberError = getCardNumberError(cardNumber);
+
+        if (!cardNumberError) {
+          expiryDateField.current && expiryDateField.current.focus();
+        }
+
+        setInputError("cardNumber", cardNumberError);
+        props.onError && props.onError(cardNumberError);
       };
     },
-    [setInputTouched]
+    [setInputTouched, setInputError]
   );
 
   const handleFocusCardNumber = useCallback((props = {}) => {
@@ -171,14 +185,29 @@ function usePaymentInput() {
     [setInputTouched]
   );
 
-  const handleChangeExpiryDate = useCallback((props = {}) => {
-    return (e: React.ChangeEvent<HTMLInputElement>) => {
-      //@ts-ignore
-      expiryDateField.current.value = formatExpiry(e);
+  const handleChangeExpiryDate = useCallback(
+    (props = {}) => {
+      return (e: React.ChangeEvent<HTMLInputElement>) => {
+        //@ts-ignore
+        expiryDateField.current.value = formatExpiry(e);
 
-      props.onChange && props.onChange(e);
-    };
-  }, []);
+        props.onChange && props.onChange(e);
+
+        const expiryDateError = getExpiryDateError(
+          //@ts-ignore
+          expiryDateField.current.value
+        );
+
+        if (!expiryDateError) {
+          cvcField.current && cvcField.current.focus();
+        }
+
+        setInputError("expiryDate", expiryDateError);
+        props.onError && props.onError(expiryDateError);
+      };
+    },
+    [setInputError]
+  );
 
   const handleKeyDownExpiryDate = useCallback((props = {}) => {
     return (e: any) => {
@@ -187,10 +216,6 @@ function usePaymentInput() {
       if (e.key !== "Enter") {
         if (e.key === "Backspace" && !e.target.value) {
           cardNumberField.current && cardNumberField.current.focus();
-        }
-
-        if (e.target.value.length === 7) {
-          cvcField.current && cvcField.current.focus();
         }
       }
     };

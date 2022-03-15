@@ -9,17 +9,33 @@ function App() {
     getExpiryDateProps,
     getCVCProps,
     getCardImageProps,
+    meta: { erroredInputs },
   } = usePayment();
 
   return (
     <div className='App'>
       <h1>react-creditcard-input</h1>
 
-      <input type='text' {...getCardNumberProps()} />
+      <div style={{ marginBottom: "1em" }}>
+        <input type='text' {...getCardNumberProps()} />
+        <small style={{ color: "red", display: "block" }}>
+          {erroredInputs.cardNumber && erroredInputs.cardNumber}
+        </small>
+      </div>
 
-      <input type='text' {...getExpiryDateProps()} />
+      <div style={{ marginBottom: "1em" }}>
+        <input type='text' {...getExpiryDateProps()} />
+        <small style={{ color: "red", display: "block" }}>
+          {erroredInputs.expiryDate && erroredInputs.expiryDate}
+        </small>
+      </div>
 
-      <input type='text' {...getCVCProps()} />
+      <div>
+        <input type='text' {...getCVCProps()} />
+        <small style={{ color: "red", display: "block" }}>
+          {erroredInputs.cvc && erroredInputs.cvc}
+        </small>
+      </div>
 
       <svg {...getCardImageProps({ images })} />
     </div>
