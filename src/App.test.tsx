@@ -39,38 +39,35 @@ describe("Mastercard", () => {
   });
 });
 
-describe("Date Tests", () => {
+describe("Expiry Date Tests", () => {
   it("should show error element if invalid date is provided", () => {
     render(<App />);
-    const input: HTMLInputElement = screen.getByTestId("expiryDateEl");
-    input.value = "02/22";
-    fireEvent.blur(input);
+    const inputEl: HTMLInputElement = screen.getByTestId("expiryDateEl");
+    fireEvent.change(inputEl, { target: { value: "02/22" } });
 
     const errorEl = screen.getByTestId("expiryErrorEl");
-    expect(errorEl).toBeInTheDocument();
+    expect(errorEl.textContent).toBe("Expiry date cannot be in the past");
   });
 });
 
 describe("CardNumber Tests", () => {
   it("should show error element if invalid cardNumber is provided", () => {
     render(<App />);
-    const input: HTMLInputElement = screen.getByTestId("cardNumberEl");
-    input.value = "5423332032932990";
-    fireEvent.blur(input);
+    const inputEl: HTMLInputElement = screen.getByTestId("cardNumberEl");
+    fireEvent.change(inputEl, { target: { value: "54233320332990" } });
 
     const errorEl = screen.getByTestId("cardNumberErrorEl");
-    expect(errorEl).toBeInTheDocument();
+    expect(errorEl.textContent).toBe("Card number is invalid");
   });
 });
 
 describe("CVC Tests", () => {
   it("should show error element if invalid CVC is provided", () => {
     render(<App />);
-    const input: HTMLInputElement = screen.getByTestId("cvcEl");
-    input.value = "1";
-    fireEvent.blur(input);
+    const inputEl: HTMLInputElement = screen.getByTestId("cvcEl");
+    fireEvent.change(inputEl, { target: { value: "12" } });
 
     const errorEl = screen.getByTestId("cvcErrorEl");
-    expect(errorEl).toBeInTheDocument();
+    expect(errorEl.textContent).toBe("CVC is invalid");
   });
 });
