@@ -1,3 +1,12 @@
 .App {
   font-family: monospace;
 }
+
+div {
+  margin-bottom: 1em;
+}
+
+div small {
+  color: red;
+  display: block;
+}
