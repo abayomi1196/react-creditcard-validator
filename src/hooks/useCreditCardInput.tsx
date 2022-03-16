@@ -256,7 +256,6 @@ function useCreditCardInput() {
     (props = {}) => {
       return (e: any) => {
         const cvc = e.target.value;
-        console.log(cvc);
 
         setInputTouched("cvc", false);
 
@@ -291,7 +290,6 @@ function useCreditCardInput() {
   const handleKeyPressCVC = useCallback((props = {}) => {
     return (e: any) => {
       const formattedCVC = e.target.value || "";
-      console.log(formattedCVC, e.target.value);
       const cvc = formattedCVC.replace(" / ", "");
 
       props.onKeyPress && props.onKeyPress(e);

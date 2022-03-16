@@ -34,7 +34,7 @@ describe("Mastercard", () => {
 });
 
 describe("Card number", () => {
-  it("should show error element if invalid card number is provided", () => {
+  it("should show error text if invalid card number is provided", () => {
     render(<App />);
     const inputEl: HTMLInputElement = screen.getByPlaceholderText(PLACEHOLDER);
     fireEvent.change(inputEl, { target: { value: "54233320332990" } });

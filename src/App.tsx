@@ -17,10 +17,7 @@ function App() {
       <h1>react-creditcard-input</h1>
 
       <div>
-        <input
-          type='text'
-          {...getCardNumberProps()}
-        />
+        <input type='text' {...getCardNumberProps()} />
         <small data-testid='cardNumberErrorEl'>
           {erroredInputs.cardNumber && erroredInputs.cardNumber}
         </small>
