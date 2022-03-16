@@ -1,13 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import App from "./App";
+import App from "../App";
 
 const PLACEHOLDER = "0000 0000 0000 0000";
-
-test("renders react-creditcard-input", () => {
-  render(<App />);
-  const linkElement = screen.getByText(/react-creditcard-input/i);
-  expect(linkElement).toBeInTheDocument();
-});
 
 describe("Visa card", () => {
   it("should have 16 digits", () => {
@@ -39,35 +33,13 @@ describe("Mastercard", () => {
   });
 });
 
-describe("Expiry Date Tests", () => {
-  it("should show error element if invalid date is provided", () => {
+describe("Card number", () => {
+  it("should show error element if invalid card number is provided", () => {
     render(<App />);
-    const inputEl: HTMLInputElement = screen.getByTestId("expiryDateEl");
-    fireEvent.change(inputEl, { target: { value: "02/22" } });
-
-    const errorEl = screen.getByTestId("expiryErrorEl");
-    expect(errorEl.textContent).toBe("Expiry date cannot be in the past");
-  });
-});
-
-describe("CardNumber Tests", () => {
-  it("should show error element if invalid cardNumber is provided", () => {
-    render(<App />);
-    const inputEl: HTMLInputElement = screen.getByTestId("cardNumberEl");
+    const inputEl: HTMLInputElement = screen.getByPlaceholderText(PLACEHOLDER);
     fireEvent.change(inputEl, { target: { value: "54233320332990" } });
 
     const errorEl = screen.getByTestId("cardNumberErrorEl");
     expect(errorEl.textContent).toBe("Card number is invalid");
-  });
-});
-
-describe("CVC Tests", () => {
-  it("should show error element if invalid CVC is provided", () => {
-    render(<App />);
-    const inputEl: HTMLInputElement = screen.getByTestId("cvcEl");
-    fireEvent.change(inputEl, { target: { value: "12" } });
-
-    const errorEl = screen.getByTestId("cvcErrorEl");
-    expect(errorEl.textContent).toBe("CVC is invalid");
   });
 });

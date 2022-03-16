@@ -20,7 +20,6 @@ function App() {
         <input
           type='text'
           {...getCardNumberProps()}
-          data-testid='cardNumberEl'
         />
         <small data-testid='cardNumberErrorEl'>
           {erroredInputs.cardNumber && erroredInputs.cardNumber}
