@@ -1,11 +1,11 @@
-import mastercard from "./mastercard";
-import placeholder from "./placeholder";
-import visa from "./visa";
+import mastercard from './mastercard';
+import placeholder from './placeholder';
+import visa from './visa';
 
 const images = {
   mastercard,
   placeholder,
-  visa,
+  visa
 };
 
 export default images;
