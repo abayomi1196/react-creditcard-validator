@@ -186,9 +186,7 @@ function useCreditCardInput() {
 
           props.onChange && props.onChange(e);
 
-          const expiryDateError = getExpiryDateError(
-            expiryDateField.current.value
-          );
+          const expiryDateError = getExpiryDateError(expiryDateField.current.value);
 
           if (!expiryDateError) {
             cvcField.current && cvcField.current.focus();

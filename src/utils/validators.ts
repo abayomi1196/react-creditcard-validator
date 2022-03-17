@@ -35,7 +35,7 @@ export const validateLuhn = (cardNumber: string) => {
   );
 };
 
-export const getCardNumberError = (cardNumber: string, { errorMessages = {} as any } = {}) => {
+export const getCardNumberError = (cardNumber: string, { errorMessages = {} as { [key: string]: string } } = {}) => {
   if (!cardNumber) {
     return errorMessages.emptyCardNumber || EMPTY_CARD_NUMBER;
   }
@@ -54,7 +54,7 @@ export const getCardNumberError = (cardNumber: string, { errorMessages = {} as a
   return errorMessages.invalidCardNumber || INVALID_CARD_NUMBER;
 };
 
-export const getExpiryDateError = (expiryDate: string, { errorMessages = {} as any } = {}) => {
+export const getExpiryDateError = (expiryDate: string, { errorMessages = {} as { [key: string]: string } } = {}) => {
   if (!expiryDate) {
     return errorMessages.emptyExpiryDate || EMPTY_EXPIRY_DATE;
   }
@@ -79,7 +79,7 @@ export const getExpiryDateError = (expiryDate: string, { errorMessages = {} as a
   return errorMessages.invalidExpiryDate || INVALID_EXPIRY_DATE;
 };
 
-export const getCVCError = (cvc: string, { errorMessages = {} as any } = {}) => {
+export const getCVCError = (cvc: string, { errorMessages = {} as { [key: string]: string } } = {}) => {
   if (!cvc) {
     return errorMessages.emptyCVC || EMPTY_CVC;
   }
