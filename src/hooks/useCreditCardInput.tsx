@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useCallback, useState } from 'react';
 import { getCardTypeByValue, SINGLE_CARD_TYPE } from '../utils/cardTypes';
 import { formatCardNumber, formatExpiry } from '../utils/formatter';
@@ -180,12 +181,14 @@ function useCreditCardInput() {
   const handleChangeExpiryDate = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         expiryDateField.current.value = formatExpiry(e);
 
         props.onChange && props.onChange(e);
 
         const expiryDateError = getExpiryDateError(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           //@ts-ignore
           expiryDateField.current.value
         );
