@@ -13,11 +13,9 @@ export const formatCardNumber = (cardNumber: string) => {
 };
 
 export const formatExpiry = (event: React.ChangeEvent<HTMLInputElement>) => {
-  // @ts-ignore
-  const eventData = event.nativeEvent && event.nativeEvent?.data;
   const prevExpiry = event.target.value.split(" / ").join("/");
 
-  if (!prevExpiry) return null;
+  if (!prevExpiry) return "";
   let expiry: RegExpMatchArray | string = prevExpiry;
 
   // if number less than 10, prepend 0 to it
@@ -34,7 +32,7 @@ export const formatExpiry = (event: React.ChangeEvent<HTMLInputElement>) => {
   expiry = expiry.match(/(\d{1,2})/g) || [];
 
   if (expiry.length === 1) {
-    if (!eventData && prevExpiry.includes("/")) {
+    if (prevExpiry.includes("/")) {
       return expiry[0];
     }
     if (/\d{2}/.test(String(expiry))) {

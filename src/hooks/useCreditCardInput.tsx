@@ -188,22 +188,22 @@ function useCreditCardInput() {
   const handleChangeExpiryDate = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
-        //@ts-ignore
-        expiryDateField.current.value = formatExpiry(e);
+        if (expiryDateField.current) {
+          expiryDateField.current.value = formatExpiry(e);
 
-        props.onChange && props.onChange(e);
+          props.onChange && props.onChange(e);
 
-        const expiryDateError = getExpiryDateError(
-          //@ts-ignore
-          expiryDateField.current.value
-        );
+          const expiryDateError = getExpiryDateError(
+            expiryDateField.current.value
+          );
 
-        if (!expiryDateError) {
-          cvcField.current && cvcField.current.focus();
+          if (!expiryDateError) {
+            cvcField.current && cvcField.current.focus();
+          }
+
+          setInputError("expiryDate", expiryDateError);
+          props.onError && props.onError(expiryDateError);
         }
-
-        setInputError("expiryDate", expiryDateError);
-        props.onError && props.onError(expiryDateError);
       };
     },
     [setInputError]
