@@ -1,13 +1,13 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import App from "../App";
+import { fireEvent, render, screen } from '@testing-library/react';
+import App from '../App';
 
-describe("CVC Tests", () => {
-  it("should show error text if invalid CVC is provided", () => {
+describe('CVC Tests', () => {
+  it('should show error text if invalid CVC is provided', () => {
     render(<App />);
-    const inputEl: HTMLInputElement = screen.getByTestId("cvcEl");
-    fireEvent.change(inputEl, { target: { value: "12" } });
+    const inputEl: HTMLInputElement = screen.getByTestId('cvcEl');
+    fireEvent.change(inputEl, { target: { value: '12' } });
 
-    const errorEl = screen.getByTestId("cvcErrorEl");
-    expect(errorEl.textContent).toBe("CVC is invalid");
+    const errorEl = screen.getByTestId('cvcErrorEl');
+    expect(errorEl.textContent).toBe('CVC is invalid');
   });
 });

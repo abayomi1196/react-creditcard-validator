@@ -1,12 +1,13 @@
-import { useRef, useCallback, useState } from "react";
-import { getCardTypeByValue, SINGLE_CARD_TYPE } from "../utils/cardTypes";
-import { formatCardNumber, formatExpiry } from "../utils/formatter";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useRef, useCallback, useState } from 'react';
+import { getCardTypeByValue, SINGLE_CARD_TYPE } from '../utils/cardTypes';
+import { formatCardNumber, formatExpiry } from '../utils/formatter';
 import {
   hasCardNumberReachedMaxLength,
   getCVCError,
   getCardNumberError,
-  getExpiryDateError,
-} from "../utils/validators";
+  getExpiryDateError
+} from '../utils/validators';
 
 function useCreditCardInput() {
   /*===State, Refs & Utility Fns===*/
@@ -23,7 +24,7 @@ function useCreditCardInput() {
   }>({
     cardNumber: false,
     expiryDate: false,
-    cvc: false,
+    cvc: false
   });
 
   const [erroredInputs, setErroredInputs] = useState<{
@@ -31,7 +32,7 @@ function useCreditCardInput() {
   }>({
     cardNumber: undefined,
     expiryDate: undefined,
-    cvc: undefined,
+    cvc: undefined
   });
 
   const setInputTouched = useCallback((input: any, value) => {
@@ -68,7 +69,7 @@ function useCreditCardInput() {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onBlur && props.onBlur(e);
         setFocused(undefined);
-        setInputTouched("cardNumber", true);
+        setInputTouched('cardNumber', true);
       };
     },
     [setInputTouched]
@@ -77,13 +78,13 @@ function useCreditCardInput() {
   const handleChangeCardNumber = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
-        const formattedCardNumber = e.target.value || "";
-        const cardNumber = formattedCardNumber.replace(/\s/g, "");
+        const formattedCardNumber = e.target.value || '';
+        const cardNumber = formattedCardNumber.replace(/\s/g, '');
 
         const cardType = getCardTypeByValue(cardNumber);
 
         setCardType(cardType);
-        setInputTouched("cardNumber", false);
+        setInputTouched('cardNumber', false);
 
         if (cardNumberField.current) {
           cardNumberField.current.value = formatCardNumber(cardNumber);
@@ -97,7 +98,7 @@ function useCreditCardInput() {
           expiryDateField.current && expiryDateField.current.focus();
         }
 
-        setInputError("cardNumber", cardNumberError);
+        setInputError('cardNumber', cardNumberError);
         props.onError && props.onError(cardNumberError);
       };
     },
@@ -107,18 +108,18 @@ function useCreditCardInput() {
   const handleFocusCardNumber = useCallback((props = {}) => {
     return (e: React.ChangeEvent<HTMLInputElement>) => {
       props.onFocus && props.onFocus(e);
-      setFocused("cardNumber");
+      setFocused('cardNumber');
     };
   }, []);
 
   const handleKeyPressCardNumber = useCallback((props = {}) => {
     return (e: any) => {
-      const formattedCardNumber = e.target.value || "";
-      const cardNumber = formattedCardNumber.replace(/\s/g, "");
+      const formattedCardNumber = e.target.value || '';
+      const cardNumber = formattedCardNumber.replace(/\s/g, '');
 
       props.onKeyPress && props.onKeyPress(e);
 
-      if (e.key !== "Enter") {
+      if (e.key !== 'Enter') {
         if (hasCardNumberReachedMaxLength(cardNumber)) {
           e.preventDefault();
           expiryDateField.current && expiryDateField.current.focus();
@@ -129,27 +130,21 @@ function useCreditCardInput() {
 
   const getCardNumberProps = useCallback(
     ({ refKey, ...props } = {}) => ({
-      "aria-label": "Card number",
-      autoComplete: "cc-number",
-      id: "cardNumber",
-      name: "cardNumber",
-      placeholder: "0000 0000 0000 0000",
-      type: "tel",
-      [refKey || "ref"]: cardNumberField,
+      'aria-label': 'Card number',
+      autoComplete: 'cc-number',
+      id: 'cardNumber',
+      name: 'cardNumber',
+      placeholder: '0000 0000 0000 0000',
+      type: 'tel',
+      [refKey || 'ref']: cardNumberField,
       ...props,
       maxLength: cardType ? null : 19,
       onChange: handleChangeCardNumber(props),
       onBlur: handleBlurCardNumber(props),
       onFocus: handleFocusCardNumber(props),
-      onKeyPress: handleKeyPressCardNumber(props),
+      onKeyPress: handleKeyPressCardNumber(props)
     }),
-    [
-      cardType,
-      handleChangeCardNumber,
-      handleBlurCardNumber,
-      handleFocusCardNumber,
-      handleKeyPressCardNumber,
-    ]
+    [cardType, handleChangeCardNumber, handleBlurCardNumber, handleFocusCardNumber, handleKeyPressCardNumber]
   );
   /*===End of Card Number ===*/
 
@@ -158,14 +153,12 @@ function useCreditCardInput() {
     (props = {}) => {
       const images = props.images || {};
       return {
-        "aria-label": cardType ? cardType.displayName : "Placeholder card",
-        children:
-          images[cardType ? cardType.type : "placeholder"] ||
-          images.placeholder,
-        width: "1.5em",
-        height: "1em",
-        viewBox: "0 0 24 16",
-        ...props,
+        'aria-label': cardType ? cardType.displayName : 'Placeholder card',
+        children: images[cardType ? cardType.type : 'placeholder'] || images.placeholder,
+        width: '1.5em',
+        height: '1em',
+        viewBox: '0 0 24 16',
+        ...props
       };
     },
     [cardType]
@@ -179,7 +172,7 @@ function useCreditCardInput() {
         props.onBlur && props.onBlur(e);
 
         setFocused(undefined);
-        setInputTouched("expiryDate", true);
+        setInputTouched('expiryDate', true);
       };
     },
     [setInputTouched]
@@ -201,7 +194,7 @@ function useCreditCardInput() {
             cvcField.current && cvcField.current.focus();
           }
 
-          setInputError("expiryDate", expiryDateError);
+          setInputError('expiryDate', expiryDateError);
           props.onError && props.onError(expiryDateError);
         }
       };
@@ -213,8 +206,8 @@ function useCreditCardInput() {
     return (e: any) => {
       props.onKeyDown && props.onKeyDown(e);
 
-      if (e.key !== "Enter") {
-        if (e.key === "Backspace" && !e.target.value) {
+      if (e.key !== 'Enter') {
+        if (e.key === 'Backspace' && !e.target.value) {
           cardNumberField.current && cardNumberField.current.focus();
         }
       }
@@ -223,17 +216,17 @@ function useCreditCardInput() {
 
   const getExpiryDateProps = useCallback(
     ({ refKey, ...props } = {}) => ({
-      "aria-label": "Expiry date in format MM YY",
-      autoComplete: "cc-exp",
-      id: "expiryDate",
-      name: "expiryDate",
-      placeholder: "MM/YY",
-      type: "tel",
-      [refKey || "ref"]: expiryDateField,
+      'aria-label': 'Expiry date in format MM YY',
+      autoComplete: 'cc-exp',
+      id: 'expiryDate',
+      name: 'expiryDate',
+      placeholder: 'MM/YY',
+      type: 'tel',
+      [refKey || 'ref']: expiryDateField,
       ...props,
       onChange: handleChangeExpiryDate(props),
       onBlur: handleBlurExpiryDate(props),
-      onKeyDown: handleKeyDownExpiryDate(props),
+      onKeyDown: handleKeyDownExpiryDate(props)
     }),
     [handleChangeExpiryDate, handleBlurExpiryDate, handleKeyDownExpiryDate]
   );
@@ -246,7 +239,7 @@ function useCreditCardInput() {
         props.onBlur && props.onBlur(e);
 
         setFocused(undefined);
-        setInputTouched("cvc", true);
+        setInputTouched('cvc', true);
       };
     },
     [setInputTouched]
@@ -257,13 +250,13 @@ function useCreditCardInput() {
       return (e: any) => {
         const cvc = e.target.value;
 
-        setInputTouched("cvc", false);
+        setInputTouched('cvc', false);
 
         props.onChange && props.onChange(e);
 
         const cvcError = getCVCError(cvc);
 
-        setInputError("cvc", cvcError);
+        setInputError('cvc', cvcError);
         props.onError && props.onError(cvcError);
       };
     },
@@ -273,7 +266,7 @@ function useCreditCardInput() {
   const handleFocusCVC = useCallback((props = {}) => {
     return (e: any) => {
       props.onFocus && props.onFocus(e);
-      setFocused("cvc");
+      setFocused('cvc');
     };
   }, []);
 
@@ -281,7 +274,7 @@ function useCreditCardInput() {
     return (e: any) => {
       props.onKeyDown && props.onKeyDown(e);
 
-      if (e.key === "Backspace" && !e.target.value) {
+      if (e.key === 'Backspace' && !e.target.value) {
         expiryDateField.current && expiryDateField.current.focus();
       }
     };
@@ -289,12 +282,12 @@ function useCreditCardInput() {
 
   const handleKeyPressCVC = useCallback((props = {}) => {
     return (e: any) => {
-      const formattedCVC = e.target.value || "";
-      const cvc = formattedCVC.replace(" / ", "");
+      const formattedCVC = e.target.value || '';
+      const cvc = formattedCVC.replace(' / ', '');
 
       props.onKeyPress && props.onKeyPress(e);
 
-      if (e.key !== "Enter") {
+      if (e.key !== 'Enter') {
         if (cvc.length >= 3) {
           e.preventDefault();
         }
@@ -304,27 +297,21 @@ function useCreditCardInput() {
 
   const getCVCProps = useCallback(
     ({ refKey, ...props } = {}) => ({
-      "aria-label": "CVC",
-      autoComplete: "cc-csc",
-      id: "cvc",
-      name: "cvc",
-      placeholder: "CVC",
-      type: "tel",
-      [refKey || "ref"]: cvcField,
+      'aria-label': 'CVC',
+      autoComplete: 'cc-csc',
+      id: 'cvc',
+      name: 'cvc',
+      placeholder: 'CVC',
+      type: 'tel',
+      [refKey || 'ref']: cvcField,
       ...props,
       onBlur: handleBlurCVC(props),
       onChange: handleChangeCVC(props),
       onFocus: handleFocusCVC(props),
       onKeyDown: handleKeyDownCVC(props),
-      onKeyPress: handleKeyPressCVC(props),
+      onKeyPress: handleKeyPressCVC(props)
     }),
-    [
-      handleBlurCVC,
-      handleChangeCVC,
-      handleFocusCVC,
-      handleKeyDownCVC,
-      handleKeyPressCVC,
-    ]
+    [handleBlurCVC, handleChangeCVC, handleFocusCVC, handleKeyDownCVC, handleKeyPressCVC]
   );
   /*===End of CVC ===*/
 
@@ -338,8 +325,8 @@ function useCreditCardInput() {
       erroredInputs,
       error,
       focused,
-      touchedInputs,
-    },
+      touchedInputs
+    }
   };
 }
 
