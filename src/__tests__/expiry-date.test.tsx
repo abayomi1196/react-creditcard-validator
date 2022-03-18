@@ -6,6 +6,7 @@ describe('Expiry Date Tests', () => {
     render(<App />);
     const inputEl: HTMLInputElement = screen.getByTestId('expiryDateEl');
     fireEvent.change(inputEl, { target: { value: '02/22' } });
+    fireEvent.blur(inputEl);
 
     const errorEl = screen.getByTestId('expiryErrorEl');
     expect(errorEl.textContent).toBe('Expiry date cannot be in the past');

@@ -38,6 +38,7 @@ describe('Card number', () => {
     render(<App />);
     const inputEl: HTMLInputElement = screen.getByPlaceholderText(PLACEHOLDER);
     fireEvent.change(inputEl, { target: { value: '54233320332990' } });
+    fireEvent.blur(inputEl);
 
     const errorEl = screen.getByTestId('cardNumberErrorEl');
     expect(errorEl.textContent).toBe('Card number is invalid');

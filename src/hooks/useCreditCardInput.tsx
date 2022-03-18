@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useCallback, useState } from 'react';
 import { getCardTypeByValue, SINGLE_CARD_TYPE } from '../utils/cardTypes';
 import { formatCardNumber, formatExpiry } from '../utils/formatter';
@@ -35,7 +34,7 @@ function useCreditCardInput() {
     cvc: undefined
   });
 
-  const setInputTouched = useCallback((input: any, value) => {
+  const setInputTouched = useCallback((input: string, value) => {
     setTouchedInputs((touchedInputs) => {
       if (touchedInputs[input] === value) return touchedInputs;
 
@@ -69,7 +68,19 @@ function useCreditCardInput() {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onBlur && props.onBlur(e);
         setFocused(undefined);
-        setInputTouched('cardNumber', true);
+        setInputTouched('cardNumber', false);
+
+        const formattedCardNumber = e.target.value || '';
+        const cardNumber = formattedCardNumber.replace(/\s/g, '');
+        const cardNumberError = getCardNumberError(cardNumber);
+
+        if (!cardNumberError) {
+          expiryDateField.current && expiryDateField.current.focus();
+        }
+
+        // update cardNumberError if cardNumber is not currently being edited, and show error message only after blurOut change.
+        !touchedInputs['cardNumber'] && setInputError('cardNumber', cardNumberError);
+        props.onError && props.onError(cardNumberError);
       };
     },
     [setInputTouched]
@@ -84,22 +95,14 @@ function useCreditCardInput() {
         const cardType = getCardTypeByValue(cardNumber);
 
         setCardType(cardType);
-        setInputTouched('cardNumber', false);
 
         if (cardNumberField.current) {
           cardNumberField.current.value = formatCardNumber(cardNumber);
         }
 
+        setInputTouched('cardNumber', true);
+        setInputError('cardNumber', undefined);
         props.onChange && props.onChange(e);
-
-        const cardNumberError = getCardNumberError(cardNumber);
-
-        if (!cardNumberError) {
-          expiryDateField.current && expiryDateField.current.focus();
-        }
-
-        setInputError('cardNumber', cardNumberError);
-        props.onError && props.onError(cardNumberError);
       };
     },
     [setInputTouched, setInputError]
@@ -113,7 +116,7 @@ function useCreditCardInput() {
   }, []);
 
   const handleKeyPressCardNumber = useCallback((props = {}) => {
-    return (e: any) => {
+    return (e: React.ChangeEvent<HTMLInputElement> & React.KeyboardEvent<HTMLInputElement>) => {
       const formattedCardNumber = e.target.value || '';
       const cardNumber = formattedCardNumber.replace(/\s/g, '');
 
@@ -168,11 +171,19 @@ function useCreditCardInput() {
   /*===Expiry Date ===*/
   const handleBlurExpiryDate = useCallback(
     (props = {}) => {
-      return (e: any) => {
+      return (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onBlur && props.onBlur(e);
 
         setFocused(undefined);
-        setInputTouched('expiryDate', true);
+        setInputTouched('expiryDate', false);
+
+        if (expiryDateField.current) {
+          const expiryDateError = getExpiryDateError(expiryDateField.current.value);
+
+          // update expiryDateError if expiryDate is not currently being edited, and show error message only after blurOut change.
+          !touchedInputs['expiryDate'] && setInputError('expiryDate', expiryDateError);
+          props.onError && props.onError(expiryDateError);
+        }
       };
     },
     [setInputTouched]
@@ -184,16 +195,15 @@ function useCreditCardInput() {
         if (expiryDateField.current) {
           expiryDateField.current.value = formatExpiry(e);
 
-          props.onChange && props.onChange(e);
-
           const expiryDateError = getExpiryDateError(expiryDateField.current.value);
 
           if (!expiryDateError) {
             cvcField.current && cvcField.current.focus();
           }
 
-          setInputError('expiryDate', expiryDateError);
-          props.onError && props.onError(expiryDateError);
+          setInputTouched('expiryDate', true);
+          setInputError('expiryDate', undefined);
+          props.onChange && props.onChange(e);
         }
       };
     },
@@ -201,7 +211,7 @@ function useCreditCardInput() {
   );
 
   const handleKeyDownExpiryDate = useCallback((props = {}) => {
-    return (e: any) => {
+    return (e: React.ChangeEvent<HTMLInputElement> & React.KeyboardEvent<HTMLInputElement>) => {
       props.onKeyDown && props.onKeyDown(e);
 
       if (e.key !== 'Enter') {
@@ -233,11 +243,18 @@ function useCreditCardInput() {
   /*===CVC ===*/
   const handleBlurCVC = useCallback(
     (props = {}) => {
-      return (e: any) => {
+      return (e: React.ChangeEvent<HTMLInputElement>) => {
         props.onBlur && props.onBlur(e);
 
         setFocused(undefined);
-        setInputTouched('cvc', true);
+        setInputTouched('cvc', false);
+
+        const cvc = e.target.value;
+        const cvcError = getCVCError(cvc);
+
+        // update cvcError if cvc is not currently being edited, and show error message only after blurOut change.
+        !touchedInputs['cvc'] && setInputError('cvc', cvcError);
+        props.onError && props.onError(e);
       };
     },
     [setInputTouched]
@@ -245,31 +262,25 @@ function useCreditCardInput() {
 
   const handleChangeCVC = useCallback(
     (props = {}) => {
-      return (e: any) => {
-        const cvc = e.target.value;
-
-        setInputTouched('cvc', false);
+      return (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputTouched('cvc', true);
+        setInputError('cvc', undefined);
 
         props.onChange && props.onChange(e);
-
-        const cvcError = getCVCError(cvc);
-
-        setInputError('cvc', cvcError);
-        props.onError && props.onError(cvcError);
       };
     },
     [setInputError, setInputTouched]
   );
 
   const handleFocusCVC = useCallback((props = {}) => {
-    return (e: any) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
       props.onFocus && props.onFocus(e);
       setFocused('cvc');
     };
   }, []);
 
   const handleKeyDownCVC = useCallback((props = {}) => {
-    return (e: any) => {
+    return (e: React.ChangeEvent<HTMLInputElement> & React.KeyboardEvent<HTMLInputElement>) => {
       props.onKeyDown && props.onKeyDown(e);
 
       if (e.key === 'Backspace' && !e.target.value) {
@@ -279,7 +290,7 @@ function useCreditCardInput() {
   }, []);
 
   const handleKeyPressCVC = useCallback((props = {}) => {
-    return (e: any) => {
+    return (e: React.KeyboardEvent<HTMLInputElement> & React.ChangeEvent<HTMLInputElement>) => {
       const formattedCVC = e.target.value || '';
       const cvc = formattedCVC.replace(' / ', '');
 

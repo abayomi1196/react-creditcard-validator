@@ -6,6 +6,7 @@ describe('CVC Tests', () => {
     render(<App />);
     const inputEl: HTMLInputElement = screen.getByTestId('cvcEl');
     fireEvent.change(inputEl, { target: { value: '12' } });
+    fireEvent.blur(inputEl);
 
     const errorEl = screen.getByTestId('cvcErrorEl');
     expect(errorEl.textContent).toBe('CVC is invalid');
