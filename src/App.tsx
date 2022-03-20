@@ -16,17 +16,17 @@ function App() {
       <h1>react-creditcard-input</h1>
 
       <div>
-        <input type="text" {...getCardNumberProps()} />
+        <input {...getCardNumberProps()} />
         <small data-testid="cardNumberErrorEl">{erroredInputs.cardNumber && erroredInputs.cardNumber}</small>
       </div>
 
       <div>
-        <input type="text" {...getExpiryDateProps()} data-testid="expiryDateEl" />
+        <input {...getExpiryDateProps()} data-testid="expiryDateEl" />
         <small data-testid="expiryErrorEl">{erroredInputs.expiryDate && erroredInputs.expiryDate}</small>
       </div>
 
       <div>
-        <input type="text" {...getCVCProps()} data-testid="cvcEl" />
+        <input {...getCVCProps()} data-testid="cvcEl" />
         <small data-testid="cvcErrorEl">{erroredInputs.cvc && erroredInputs.cvc}</small>
       </div>
 

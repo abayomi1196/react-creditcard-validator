@@ -132,16 +132,16 @@ function useCreditCardInput() {
   }, []);
 
   const getCardNumberProps = useCallback(
-    ({ refKey, ...props } = {}) => ({
+    (props: React.InputHTMLAttributes<HTMLInputElement> = {}) => ({
       'aria-label': 'Card number',
       autoComplete: 'cc-number',
       id: 'cardNumber',
       name: 'cardNumber',
       placeholder: '0000 0000 0000 0000',
       type: 'tel',
-      [refKey || 'ref']: cardNumberField,
+      ref: cardNumberField as React.LegacyRef<HTMLInputElement> | undefined,
       ...props,
-      maxLength: cardType ? null : 19,
+      maxLength: cardType ? undefined : 19,
       onChange: handleChangeCardNumber(props),
       onBlur: handleBlurCardNumber(props),
       onFocus: handleFocusCardNumber(props),
@@ -223,14 +223,14 @@ function useCreditCardInput() {
   }, []);
 
   const getExpiryDateProps = useCallback(
-    ({ refKey, ...props } = {}) => ({
+    (props: React.InputHTMLAttributes<HTMLInputElement> = {}) => ({
       'aria-label': 'Expiry date in format MM YY',
       autoComplete: 'cc-exp',
       id: 'expiryDate',
       name: 'expiryDate',
       placeholder: 'MM/YY',
       type: 'tel',
-      [refKey || 'ref']: expiryDateField,
+      ref: expiryDateField as React.LegacyRef<HTMLInputElement> | undefined,
       ...props,
       onChange: handleChangeExpiryDate(props),
       onBlur: handleBlurExpiryDate(props),
@@ -252,7 +252,7 @@ function useCreditCardInput() {
 
         // update cvcError if cvc is not currently being edited, and show error message only after blurOut change.
         !touchedInputs['cvc'] && setInputError('cvc', cvcError);
-        props.onError && props.onError(e);
+        props.onError && props.onError(cvcError);
 
         props.onBlur && props.onBlur(e);
       };
@@ -305,14 +305,14 @@ function useCreditCardInput() {
   }, []);
 
   const getCVCProps = useCallback(
-    ({ refKey, ...props } = {}) => ({
+    (props: React.InputHTMLAttributes<HTMLInputElement> = {}) => ({
       'aria-label': 'CVC',
       autoComplete: 'cc-csc',
       id: 'cvc',
       name: 'cvc',
       placeholder: 'CVC',
       type: 'tel',
-      [refKey || 'ref']: cvcField,
+      ref: cvcField as React.LegacyRef<HTMLInputElement> | undefined,
       ...props,
       onBlur: handleBlurCVC(props),
       onChange: handleChangeCVC(props),
