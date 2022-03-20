@@ -1,4 +1,4 @@
-## react-creditcard-input
+## react-creditcard-validator
 
 ## Available Scripts
 
