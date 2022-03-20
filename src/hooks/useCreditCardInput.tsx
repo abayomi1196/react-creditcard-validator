@@ -66,7 +66,6 @@ function useCreditCardInput() {
   const handleBlurCardNumber = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
-        props.onBlur && props.onBlur(e);
         setFocused(undefined);
         setInputTouched('cardNumber', false);
 
@@ -81,6 +80,7 @@ function useCreditCardInput() {
         // update cardNumberError if cardNumber is not currently being edited, and show error message only after blurOut change.
         !touchedInputs['cardNumber'] && setInputError('cardNumber', cardNumberError);
         props.onError && props.onError(cardNumberError);
+        props.onBlur && props.onBlur(e);
       };
     },
     [setInputTouched]
@@ -120,14 +120,14 @@ function useCreditCardInput() {
       const formattedCardNumber = e.target.value || '';
       const cardNumber = formattedCardNumber.replace(/\s/g, '');
 
-      props.onKeyPress && props.onKeyPress(e);
-
       if (e.key !== 'Enter') {
         if (hasCardNumberReachedMaxLength(cardNumber)) {
           e.preventDefault();
           expiryDateField.current && expiryDateField.current.focus();
         }
       }
+
+      props.onKeyPress && props.onKeyPress(e);
     };
   }, []);
 
@@ -155,6 +155,7 @@ function useCreditCardInput() {
   const getCardImageProps = useCallback(
     (props = {}) => {
       const images = props.images || {};
+
       return {
         'aria-label': cardType ? cardType.displayName : 'Placeholder card',
         children: images[cardType ? cardType.type : 'placeholder'] || images.placeholder,
@@ -172,8 +173,6 @@ function useCreditCardInput() {
   const handleBlurExpiryDate = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
-        props.onBlur && props.onBlur(e);
-
         setFocused(undefined);
         setInputTouched('expiryDate', false);
 
@@ -184,6 +183,8 @@ function useCreditCardInput() {
           !touchedInputs['expiryDate'] && setInputError('expiryDate', expiryDateError);
           props.onError && props.onError(expiryDateError);
         }
+
+        props.onBlur && props.onBlur(e);
       };
     },
     [setInputTouched]
@@ -203,8 +204,8 @@ function useCreditCardInput() {
 
           setInputTouched('expiryDate', true);
           setInputError('expiryDate', undefined);
-          props.onChange && props.onChange(e);
         }
+        props.onChange && props.onChange(e);
       };
     },
     [setInputError]
@@ -212,13 +213,12 @@ function useCreditCardInput() {
 
   const handleKeyDownExpiryDate = useCallback((props = {}) => {
     return (e: React.ChangeEvent<HTMLInputElement> & React.KeyboardEvent<HTMLInputElement>) => {
-      props.onKeyDown && props.onKeyDown(e);
-
       if (e.key !== 'Enter') {
         if (e.key === 'Backspace' && !e.target.value) {
           cardNumberField.current && cardNumberField.current.focus();
         }
       }
+      props.onKeyDown && props.onKeyDown(e);
     };
   }, []);
 
@@ -244,8 +244,6 @@ function useCreditCardInput() {
   const handleBlurCVC = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
-        props.onBlur && props.onBlur(e);
-
         setFocused(undefined);
         setInputTouched('cvc', false);
 
@@ -255,6 +253,8 @@ function useCreditCardInput() {
         // update cvcError if cvc is not currently being edited, and show error message only after blurOut change.
         !touchedInputs['cvc'] && setInputError('cvc', cvcError);
         props.onError && props.onError(e);
+
+        props.onBlur && props.onBlur(e);
       };
     },
     [setInputTouched]
@@ -281,11 +281,11 @@ function useCreditCardInput() {
 
   const handleKeyDownCVC = useCallback((props = {}) => {
     return (e: React.ChangeEvent<HTMLInputElement> & React.KeyboardEvent<HTMLInputElement>) => {
-      props.onKeyDown && props.onKeyDown(e);
-
       if (e.key === 'Backspace' && !e.target.value) {
         expiryDateField.current && expiryDateField.current.focus();
       }
+
+      props.onKeyDown && props.onKeyDown(e);
     };
   }, []);
 
@@ -294,13 +294,13 @@ function useCreditCardInput() {
       const formattedCVC = e.target.value || '';
       const cvc = formattedCVC.replace(' / ', '');
 
-      props.onKeyPress && props.onKeyPress(e);
-
       if (e.key !== 'Enter') {
         if (cvc.length >= 3) {
           e.preventDefault();
         }
       }
+
+      props.onKeyPress && props.onKeyPress(e);
     };
   }, []);
 

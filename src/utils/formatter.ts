@@ -1,10 +1,13 @@
 import { getCardTypeByValue, DEFAULT_CARD_FORMAT } from './cardTypes';
 
+/**
+ * This function extracts the card type from the cardNumber argument, then proceeds to format it according to the format associated with that card, or by the default card format, finally the formatted card number is then returned.
+ * @param cardNumber string
+ * @returns string
+ */
 export const formatCardNumber = (cardNumber: string) => {
-  // 1. get card type
   const cardType = getCardTypeByValue(cardNumber);
 
-  // 2. format cardNumber by cardType format
   if (cardType) {
     return (cardNumber.match(cardType.format) || []).join(' ');
   }
@@ -12,6 +15,11 @@ export const formatCardNumber = (cardNumber: string) => {
   return (cardNumber.match(DEFAULT_CARD_FORMAT) || []).join(' ');
 };
 
+/**
+ * Formats the expiry date input, using the input event.
+ * @param event
+ * @returns string
+ */
 export const formatExpiry = (event: React.ChangeEvent<HTMLInputElement>) => {
   const prevExpiry = event.target.value.split(' / ').join('/');
 
@@ -23,7 +31,7 @@ export const formatExpiry = (event: React.ChangeEvent<HTMLInputElement>) => {
     expiry = `0${expiry}`;
   }
 
-  // if month input exceeds 12, i.e 14 / 40 -> set to 01/4 / 04/
+  // if month input exceeds 12, i.e 14 or 40 -> set to 01/4 or 04/
   if (prevExpiry.length === 2 && +prevExpiry > 12) {
     const [head, ...tail] = prevExpiry.split('');
     expiry = `0${head}/${tail.join('')}`;

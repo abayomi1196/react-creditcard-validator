@@ -35,9 +35,14 @@ export const validateLuhn = (cardNumber: string) => {
   );
 };
 
-export const getCardNumberError = (cardNumber: string, { errorMessages = {} as { [key: string]: string } } = {}) => {
+/**
+ * Validates card number inputs, checking against empty inputs, and validating with the `validateLuhn` method.
+ * @param cardNumber
+ * @returns string | boolean
+ */
+export const getCardNumberError = (cardNumber: string) => {
   if (!cardNumber) {
-    return errorMessages.emptyCardNumber || EMPTY_CARD_NUMBER;
+    return EMPTY_CARD_NUMBER;
   }
 
   const rawCardNumber = cardNumber.replace(/\s/g, '');
@@ -51,12 +56,18 @@ export const getCardNumberError = (cardNumber: string, { errorMessages = {} as {
       return isLuhnValid;
     }
   }
-  return errorMessages.invalidCardNumber || INVALID_CARD_NUMBER;
+
+  return INVALID_CARD_NUMBER;
 };
 
-export const getExpiryDateError = (expiryDate: string, { errorMessages = {} as { [key: string]: string } } = {}) => {
+/**
+ * Validates expiry date inputs, checking against empty inputs, invalid months / years, or past dates.
+ * @param expiryDate
+ * @returns string | undefined
+ */
+export const getExpiryDateError = (expiryDate: string) => {
   if (!expiryDate) {
-    return errorMessages.emptyExpiryDate || EMPTY_EXPIRY_DATE;
+    return EMPTY_EXPIRY_DATE;
   }
 
   const rawExpiryDate = expiryDate.replace(' / ', '').replace('/', '');
@@ -64,26 +75,34 @@ export const getExpiryDateError = (expiryDate: string, { errorMessages = {} as {
   if (rawExpiryDate.length === 4) {
     const month = rawExpiryDate.slice(0, 2);
     const year = `20${rawExpiryDate.slice(2, 4)}`;
+
     if (!MONTH_REGEX.test(month)) {
-      return errorMessages.monthOutOfRange || MONTH_OUT_OF_RANGE;
+      return MONTH_OUT_OF_RANGE;
     }
+
     if (parseInt(year) < new Date().getFullYear()) {
-      return errorMessages.yearOutOfRange || YEAR_OUT_OF_RANGE;
+      return YEAR_OUT_OF_RANGE;
     }
+
     if (parseInt(year) === new Date().getFullYear() && parseInt(month) < new Date().getMonth() + 1) {
-      return errorMessages.dateOutOfRange || DATE_OUT_OF_RANGE;
+      return DATE_OUT_OF_RANGE;
     }
 
     return;
   }
-  return errorMessages.invalidExpiryDate || INVALID_EXPIRY_DATE;
+  return INVALID_EXPIRY_DATE;
 };
 
-export const getCVCError = (cvc: string, { errorMessages = {} as { [key: string]: string } } = {}) => {
+/**
+ * Validates cvc input, checking for empty inputs & incomplete inputs.
+ * @param cvc
+ * @returns string
+ */
+export const getCVCError = (cvc: string) => {
   if (!cvc) {
-    return errorMessages.emptyCVC || EMPTY_CVC;
+    return EMPTY_CVC;
   }
   if (cvc.length < 3) {
-    return errorMessages.invalidCVC || INVALID_CVC;
+    return INVALID_CVC;
   }
 };

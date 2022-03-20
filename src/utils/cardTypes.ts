@@ -1,4 +1,3 @@
-export const CVC_LENGTH = 3;
 export const DEFAULT_CARD_FORMAT = /(\d{1,4})/g;
 export const CARD_TYPES = [
   {
@@ -23,7 +22,7 @@ export const CARD_TYPES = [
     format: DEFAULT_CARD_FORMAT,
     startPattern: /^5061/,
     gaps: [4, 8, 12],
-    lengths: [19]
+    lengths: [18, 19]
   }
 ];
 
