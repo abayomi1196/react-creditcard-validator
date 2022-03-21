@@ -52,9 +52,19 @@
     "name": "Ayodele Abayomi",
     "email": "samabayomi301@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abayomi1196/react-creditcard-validator"
+  },
+  "bugs": {
+    "url": "https://github.com/abayomi1196/react-creditcard-validator/issues"
+  },
+  "homepage": "https://github.com/abayomi1196/react-creditcard-validator/main/README.md",
   "keywords": [
     "input-formatting",
     "payment-input",
-    "input-validation"
+    "input-validation",
+    "react",
+    "typescript"
   ]
 }
