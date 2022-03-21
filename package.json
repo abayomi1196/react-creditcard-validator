@@ -1,6 +1,6 @@
 {
   "name": "react-creditcard-validator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A fully typed React custom hook for formatting and validating payment card input fields",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
