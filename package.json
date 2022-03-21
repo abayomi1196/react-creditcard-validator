@@ -1,8 +1,33 @@
 {
-  "name": "react-creditcard-input",
+  "name": "react-creditcard-validator",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
+  "description": "A fully typed React custom hook for formatting and validating payment card input fields",
+  "main": "dist/index.js",
+  "types": "dist/hooks/useCreditCardInput.d.ts",
+  "dependencies": {},
+  "scripts": {
+    "start": "rollup -c -w",
+    "build": "rollup -c",
+    "format": "npx prettier --write ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.15.0",
+    "@typescript-eslint/parser": "5.15.0",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "eslint": "8.11.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-react": "7.29.4",
+    "prettier": "2.6.0",
+    "rollup": "^2.70.1",
+    "rollup-plugin-typescript2": "^0.31.2",
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "12.1.4",
     "@testing-library/user-event": "13.5.0",
@@ -16,38 +41,20 @@
     "typescript": "4.6.2",
     "web-vitals": "2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "format": "npx prettier --write ."
+  "peerDependencies": {
+    "react": ">=16.8.0"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Ayodele Abayomi",
+    "email": "samabayomi301@gmail.com"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.15.0",
-    "@typescript-eslint/parser": "5.15.0",
-    "eslint": "8.11.0",
-    "eslint-config-prettier": "8.5.0",
-    "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-react": "7.29.4",
-    "prettier": "2.6.0"
-  }
+  "keywords": [
+    "input-formatting",
+    "payment-input",
+    "input-validation"
+  ]
 }

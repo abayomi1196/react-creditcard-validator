@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["es6", "dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,8 +16,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noUnusedParameters": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "declaration": true,
+    "outDir": "dist"
   },
   "baseUrl": "src",
-  "include": ["src"]
+  "include": ["src", "__tests__"],
+  "exclude": ["node_modules", "dist", "example", "rollup.config.js"]
 }

@@ -1,28 +1,59 @@
-## react-creditcard-validator
+## React CreditCard Validator
 
-## Available Scripts
+A React Custom Hook to provide validation and formatting for payment card input fields. Motivated by [React Payment Inputs](https://github.com/medipass/react-payment-inputs). This package offers a fully typed alternative, written in TypeScript.
 
-In the project directory, you can run:
+### Requirements
 
-### `npm start`
+Requires a hooks-compatible version of React(>= v16.8).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Installation
 
-### `npm test`
+```
+  npm install react-creditcard-validator --save
 
-Launches the test runner in the interactive watch mode.
+  # or, if u prefer Yarn, you can run:
 
-### `npm run build`
+  yarn add react-creditcard-validator
 
-Builds the app for production to the `build` folder.
+```
 
-### `npm run eject`
+### Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+  import React from 'react';
+  import { useCreditCardValidator, images } from 'react-creditcard-validator';
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  export default function PaymentInputs() {
+    const { getCardNumberProps, getExpiryDateProps, getCVCProps, getCardImageProps, meta: {erroredInputs} } = useCreditCardValidator();
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    return (
+      <div>
+        <input {...getCardNumberProps()}  />
+        <small>{erroredInputs.cardNumber && erroredInputs.cardNumber}</small>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+        <input {...getExpiryDateProps()}  />
+        <small>{erroredInputs.expiryDate && erroredInputs.expiryDate}</small>
+
+
+        <input {...getCVCProps()}  />
+        <small>{erroredInputs.cvc && erroredInputs.cvc}</small>
+
+
+        <svg {...getCardImageProps({images})}/>
+      </div>
+    );
+  }
+```
+
+> By Spreading the prop getter functions on the inputs, You get automatic formatting, focus, and validation.
+
+> **Note**: Pass all custom event handlers (e.g onChange) inside the prop getter function e.g (getCardNumberProps({onChange: (e) => console.log(e.target.value)})), so that the default event handlers are not overwritten
+
+### Limitations
+
+This package does not currently support custom validation or formatting.
+
+### Contributions
+
+Please open an issue if you have any suggestions or feedback
