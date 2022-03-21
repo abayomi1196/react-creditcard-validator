@@ -56,4 +56,4 @@ This package does not currently support custom validation or formatting.
 
 ### Contributions
 
-Please open an issue if you have any suggestions or feedback
+Please make sure to read the [Contributing Guide](./CONTRIBUTING.md) before making a pull request.
