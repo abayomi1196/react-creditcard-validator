@@ -139,7 +139,7 @@ function useCreditCardInput() {
       name: 'cardNumber',
       placeholder: '0000 0000 0000 0000',
       type: 'tel',
-      ref: cardNumberField as React.LegacyRef<HTMLInputElement> | undefined,
+      ref: cardNumberField,
       ...props,
       maxLength: cardType ? undefined : 19,
       onChange: handleChangeCardNumber(props),
@@ -230,7 +230,7 @@ function useCreditCardInput() {
       name: 'expiryDate',
       placeholder: 'MM/YY',
       type: 'tel',
-      ref: expiryDateField as React.LegacyRef<HTMLInputElement> | undefined,
+      ref: expiryDateField,
       ...props,
       onChange: handleChangeExpiryDate(props),
       onBlur: handleBlurExpiryDate(props),
@@ -247,13 +247,13 @@ function useCreditCardInput() {
         setFocused(undefined);
         setInputTouched('cvc', false);
 
-        const cvc = e.target.value;
-        const cvcError = getCVCError(cvc);
+        if (cvcField.current) {
+          const cvcError = getCVCError(cvcField.current.value);
 
-        // update cvcError if cvc is not currently being edited, and show error message only after blurOut change.
-        !touchedInputs['cvc'] && setInputError('cvc', cvcError);
-        props.onError && props.onError(cvcError);
-
+          // update cvcError if cvc is not currently being edited, and show error message only after blurOut change.
+          !touchedInputs['cvc'] && setInputError('cvc', cvcError);
+          props.onError && props.onError(cvcError);
+        }
         props.onBlur && props.onBlur(e);
       };
     },
@@ -263,8 +263,18 @@ function useCreditCardInput() {
   const handleChangeCVC = useCallback(
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputTouched('cvc', true);
-        setInputError('cvc', undefined);
+        if (cvcField.current) {
+          cvcField.current.value = e.target.value;
+
+          const cvcError = getCVCError(cvcField.current.value);
+
+          if (!cvcError) {
+            cvcField.current && cvcField.current.blur();
+          }
+
+          setInputTouched('cvc', true);
+          setInputError('cvc', undefined);
+        }
 
         props.onChange && props.onChange(e);
       };
@@ -281,10 +291,11 @@ function useCreditCardInput() {
 
   const handleKeyDownCVC = useCallback((props = {}) => {
     return (e: React.ChangeEvent<HTMLInputElement> & React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Backspace' && !e.target.value) {
-        expiryDateField.current && expiryDateField.current.focus();
+      if (e.key !== 'Enter') {
+        if (e.key === 'Backspace' && !e.target.value) {
+          expiryDateField.current && expiryDateField.current.focus();
+        }
       }
-
       props.onKeyDown && props.onKeyDown(e);
     };
   }, []);
@@ -297,6 +308,7 @@ function useCreditCardInput() {
       if (e.key !== 'Enter') {
         if (cvc.length >= 3) {
           e.preventDefault();
+          cvcField.current && cvcField.current.blur();
         }
       }
 
@@ -312,10 +324,10 @@ function useCreditCardInput() {
       name: 'cvc',
       placeholder: 'CVC',
       type: 'tel',
-      ref: cvcField as React.LegacyRef<HTMLInputElement> | undefined,
+      ref: cvcField,
       ...props,
-      onBlur: handleBlurCVC(props),
       onChange: handleChangeCVC(props),
+      onBlur: handleBlurCVC(props),
       onFocus: handleFocusCVC(props),
       onKeyDown: handleKeyDownCVC(props),
       onKeyPress: handleKeyPressCVC(props)
