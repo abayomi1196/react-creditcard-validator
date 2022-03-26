@@ -52,25 +52,23 @@ Requires a hooks-compatible version of React(>= v16.8).
 
 ### Custom Validation
 
-`const data = useCreditCardValidator(options);`
+`` const data = useCreditCardValidator(options); ``
 
 #### options
 
 > `Object({cardNumberValidator, cvcValidator, expiryDateValidator})`
 
-###### options.cardNumberValidator
+##### options.cardNumberValidator
 
 > `Function(cardNumber: string) => string | undefined`
 
-###### options.cvcValidator
+##### options.cvcValidator
 
 > `Function(cvc: string) => string | undefined`
 
-###### options.expiryDateValidator
+##### options.expiryDateValidator
 
 > `Function(month: string, year: string) => string | undefined`
-
-<br />
 
 ##### Example
 
