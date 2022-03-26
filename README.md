@@ -81,7 +81,7 @@ Requires a hooks-compatible version of React(>= v16.8).
   }
 
   export default function MyComponent() {
-    const { ... } = useCreditCardValidator({cardNumberValidator: cardNumberValidate});
+    const { ... } = useCreditCardValidator({expiryDateValidator: expDateValidate);
   }
 
 ```
