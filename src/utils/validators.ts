@@ -58,15 +58,16 @@ export const getCardNumberError = (
     if (doesCardNumberMatchLength) {
       const isLuhnValid = validateLuhn(rawCardNumber);
 
-      if (cardNumberValidator) {
-        return cardNumberValidator(rawCardNumber);
+      if (isLuhnValid) {
+        if (cardNumberValidator) {
+          return cardNumberValidator(rawCardNumber);
+        }
+        return;
       }
-
-      return isLuhnValid;
     }
   }
 
-  if (cardNumberValidator) {
+  if (cardNumberValidator && rawCardNumber.length >= 16) {
     return cardNumberValidator(rawCardNumber);
   }
 

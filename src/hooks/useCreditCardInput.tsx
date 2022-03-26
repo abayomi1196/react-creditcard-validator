@@ -25,7 +25,7 @@ function useCreditCardInput({ cvcValidator, expiryDateValidator, cardNumberValid
   const [focused, setFocused] = useState<string | undefined>();
 
   const [touchedInputs, setTouchedInputs] = useState<{
-    [key: string]: boolean;
+    [key in 'cardNumber' | 'expiryDate' | 'cvc']: boolean;
   }>({
     cardNumber: false,
     expiryDate: false,
@@ -33,14 +33,14 @@ function useCreditCardInput({ cvcValidator, expiryDateValidator, cardNumberValid
   });
 
   const [erroredInputs, setErroredInputs] = useState<{
-    [key: string]: string | undefined;
+    [key in 'cardNumber' | 'expiryDate' | 'cvc']: string | undefined;
   }>({
     cardNumber: undefined,
     expiryDate: undefined,
     cvc: undefined
   });
 
-  const setInputTouched = useCallback((input: string, value) => {
+  const setInputTouched = useCallback((input: 'cardNumber' | 'expiryDate' | 'cvc', value: boolean) => {
     setTouchedInputs((touchedInputs) => {
       if (touchedInputs[input] === value) return touchedInputs;
 
@@ -49,7 +49,7 @@ function useCreditCardInput({ cvcValidator, expiryDateValidator, cardNumberValid
     });
   }, []);
 
-  const setInputError = useCallback((input, error) => {
+  const setInputError = useCallback((input: 'cardNumber' | 'expiryDate' | 'cvc', error) => {
     setErroredInputs((erroredInputs) => {
       if (erroredInputs[input] === error) return erroredInputs;
 
