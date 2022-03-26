@@ -8,7 +8,13 @@ import {
   getExpiryDateError
 } from '../utils/validators';
 
-function useCreditCardInput() {
+type CreditCardInputProps = {
+  cvcValidator?: (cvc: string) => string | undefined;
+  expiryDateValidator?: (month: string, year: string) => string | undefined;
+  cardNumberValidator?: (cardNumber: string) => string | undefined;
+};
+
+function useCreditCardInput({ cvcValidator, expiryDateValidator, cardNumberValidator }: CreditCardInputProps = {}) {
   /*===State, Refs & Utility Fns===*/
   const cardNumberField = useRef<HTMLInputElement>();
   const expiryDateField = useRef<HTMLInputElement>();
@@ -71,7 +77,7 @@ function useCreditCardInput() {
 
         const formattedCardNumber = e.target.value || '';
         const cardNumber = formattedCardNumber.replace(/\s/g, '');
-        const cardNumberError = getCardNumberError(cardNumber);
+        const cardNumberError = getCardNumberError(cardNumber, cardNumberValidator);
 
         if (!cardNumberError) {
           expiryDateField.current && expiryDateField.current.focus();
@@ -177,7 +183,7 @@ function useCreditCardInput() {
         setInputTouched('expiryDate', false);
 
         if (expiryDateField.current) {
-          const expiryDateError = getExpiryDateError(expiryDateField.current.value);
+          const expiryDateError = getExpiryDateError(expiryDateField.current.value, expiryDateValidator);
 
           // update expiryDateError if expiryDate is not currently being edited, and show error message only after blurOut change.
           !touchedInputs['expiryDate'] && setInputError('expiryDate', expiryDateError);
@@ -196,7 +202,7 @@ function useCreditCardInput() {
         if (expiryDateField.current) {
           expiryDateField.current.value = formatExpiry(e);
 
-          const expiryDateError = getExpiryDateError(expiryDateField.current.value);
+          const expiryDateError = getExpiryDateError(expiryDateField.current.value, expiryDateValidator);
 
           if (!expiryDateError) {
             cvcField.current && cvcField.current.focus();
@@ -248,7 +254,7 @@ function useCreditCardInput() {
         setInputTouched('cvc', false);
 
         if (cvcField.current) {
-          const cvcError = getCVCError(cvcField.current.value);
+          const cvcError = getCVCError(cvcField.current.value, cvcValidator);
 
           // update cvcError if cvc is not currently being edited, and show error message only after blurOut change.
           !touchedInputs['cvc'] && setInputError('cvc', cvcError);
@@ -266,7 +272,7 @@ function useCreditCardInput() {
         if (cvcField.current) {
           cvcField.current.value = e.target.value;
 
-          const cvcError = getCVCError(cvcField.current.value);
+          const cvcError = getCVCError(cvcField.current.value, cvcValidator);
 
           if (!cvcError) {
             cvcField.current && cvcField.current.blur();

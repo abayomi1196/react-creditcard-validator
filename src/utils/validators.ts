@@ -36,36 +36,53 @@ export const validateLuhn = (cardNumber: string) => {
 };
 
 /**
- * Validates card number inputs, checking against empty inputs, and validating with the `validateLuhn` method.
+ * Validates card number inputs, checking against empty inputs, and validating with the `validateLuhn` method & custom validation through the `cardNumberValidator` function.
  * @param cardNumber
- * @returns string | boolean
+ * @param {Function} cardNumberValidator
+ * @returns string | boolean | undefined
  */
-export const getCardNumberError = (cardNumber: string) => {
+export const getCardNumberError = (
+  cardNumber: string,
+  cardNumberValidator?: (cardNumber: string) => string | undefined
+) => {
   if (!cardNumber) {
     return EMPTY_CARD_NUMBER;
   }
 
   const rawCardNumber = cardNumber.replace(/\s/g, '');
-
   const cardType = getCardTypeByValue(rawCardNumber);
 
   if (cardType && cardType.lengths) {
     const doesCardNumberMatchLength = cardType.lengths.includes(rawCardNumber.length);
+
     if (doesCardNumberMatchLength) {
       const isLuhnValid = validateLuhn(rawCardNumber);
+
+      if (cardNumberValidator) {
+        return cardNumberValidator(rawCardNumber);
+      }
+
       return isLuhnValid;
     }
+  }
+
+  if (cardNumberValidator) {
+    return cardNumberValidator(rawCardNumber);
   }
 
   return INVALID_CARD_NUMBER;
 };
 
 /**
- * Validates expiry date inputs, checking against empty inputs, invalid months / years, or past dates.
+ * Validates expiry date inputs, checking against empty inputs, invalid months / years, or past dates. Also provides custom validation through the `expiryDateValidator` function
  * @param expiryDate
+ * @param {Function} expiryDateValidator
  * @returns string | undefined
  */
-export const getExpiryDateError = (expiryDate: string) => {
+export const getExpiryDateError = (
+  expiryDate: string,
+  expiryDateValidator?: (month: string, year: string) => string | undefined
+) => {
   if (!expiryDate) {
     return EMPTY_EXPIRY_DATE;
   }
@@ -88,21 +105,29 @@ export const getExpiryDateError = (expiryDate: string) => {
       return DATE_OUT_OF_RANGE;
     }
 
+    if (expiryDateValidator) {
+      return expiryDateValidator(month, year);
+    }
+
     return;
   }
   return INVALID_EXPIRY_DATE;
 };
 
 /**
- * Validates cvc input, checking for empty inputs & incomplete inputs.
- * @param cvc
- * @returns string
+ * Validates cvc input, checking for empty inputs & incomplete inputs. Also invokes user custom validation logic if its exists.
+ * @param {string} cvc
+ * @param {Function} [cvcValidator]
+ * @returns string | undefined
  */
-export const getCVCError = (cvc: string) => {
+export const getCVCError = (cvc: string, cvcValidator?: (cvc: string) => string | undefined) => {
   if (!cvc) {
     return EMPTY_CVC;
   }
   if (cvc.length < 3) {
     return INVALID_CVC;
+  }
+  if (cvcValidator) {
+    return cvcValidator(cvc);
   }
 };
