@@ -22,7 +22,7 @@ To run the app on a development server with hot module reloading:
 
 ### ✅ Tests
 
-The project uses Jest and Testing Library for testing.
+The project uses Jest for testing.
 
 You should run tests before you commit, or at least before you open a pull request. Pull requests need to pass all checks to be reviewed, so doing it beforehand will save you time.
 
