@@ -39,7 +39,7 @@ export const validateLuhn = (cardNumber: string) => {
  * Validates card number inputs, checking against empty inputs, and validating with the `validateLuhn` method & custom validation through the `cardNumberValidator` function.
  * @param cardNumber
  * @param {Function} cardNumberValidator
- * @returns string | boolean | undefined
+ * @returns string | undefined
  */
 export const getCardNumberError = (
   cardNumber: string,
