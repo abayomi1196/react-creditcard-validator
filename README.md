@@ -93,10 +93,6 @@ Requires a hooks-compatible version of React(>= v16.8).
 
 Currently only offers formatting and images for MasterCard, Verve & Visa cards.
 
-## Contributions
-
-Please make sure to read the [Contributing Guide](./CONTRIBUTING.md) before making a pull request.
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
