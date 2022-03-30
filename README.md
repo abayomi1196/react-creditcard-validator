@@ -1,6 +1,6 @@
 # React CreditCard Validator
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 A React Custom Hook to provide validation and formatting for payment card input fields. Motivated by [React Payment Inputs](https://github.com/medipass/react-payment-inputs). This package offers a fully typed alternative, written completely in TypeScript.
@@ -107,6 +107,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://chijiooke.netlify.app"><img src="https://avatars.githubusercontent.com/u/12538597?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Silva Chijioke Michael</b></sub></a><br /><a href="https://github.com/abayomi1196/react-creditcard-validator/commits?author=chijiooke" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.joshx.dev"><img src="https://avatars.githubusercontent.com/u/29876804?v=4?s=100" width="100px;" alt=""/><br /><sub><b>JoshX</b></sub></a><br /><a href="https://github.com/abayomi1196/react-creditcard-validator/commits?author=JCalmCrasher" title="Documentation">📖</a></td>
   </tr>
 </table>
 
