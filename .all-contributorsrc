@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "chijiooke",
+      "name": "Silva Chijioke Michael",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12538597?v=4",
+      "profile": "http://chijiooke.netlify.app",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "react-creditcard-validator",
+  "projectOwner": "abayomi1196",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
