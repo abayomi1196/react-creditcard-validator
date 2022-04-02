@@ -17,11 +17,11 @@ export const formatCardNumber = (cardNumber: string) => {
 
 /**
  * Formats the expiry date input, using the input event.
- * @param event
+ * @param date string
  * @returns string
  */
-export const formatExpiry = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const prevExpiry = event.target.value.split(' / ').join('/');
+export const formatExpiry = (date: string) => {
+  const prevExpiry = date.split(' / ').join('/');
 
   if (!prevExpiry) return '';
   let expiry: RegExpMatchArray | string = prevExpiry;

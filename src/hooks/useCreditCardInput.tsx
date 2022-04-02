@@ -200,7 +200,7 @@ function useCreditCardInput({ cvcValidator, expiryDateValidator, cardNumberValid
     (props = {}) => {
       return (e: React.ChangeEvent<HTMLInputElement>) => {
         if (expiryDateField.current) {
-          expiryDateField.current.value = formatExpiry(e);
+          expiryDateField.current.value = formatExpiry(e.target.value);
 
           const expiryDateError = getExpiryDateError(expiryDateField.current.value, expiryDateValidator);
 
